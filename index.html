@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動新聞：租屋寵物生存戰！</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="game-container">
+    
+    <div id="start-screen" class="screen active">
+        <h1>租屋寵物生存戰</h1>
+        <p>成為一個盡責的飼主！<br>完成任務，別讓房東和鄰居抓狂！</p>
+        <p>請選擇你要養的寵物：</p>
+        <div class="pet-choice">
+            <div class="pet-card" onclick="selectPet('cat')">🐈<br><span>貓派</span></div>
+            <div class="pet-card" onclick="selectPet('dog')">🐕<br><span>狗派</span></div>
+        </div>
+    </div>
+
+    <div id="agreement-screen" class="screen">
+        <h2>租屋寵物公約</h2>
+        <div id="selected-pet-icon">🐾</div>
+        <div class="contract-box">
+            本人承諾入住後將盡責照顧所飼養之寵物，保持環境整潔、控制音量。若累積 <strong class="text-danger">3次</strong> 違規事項且未及時處理達 <strong class="text-danger">10秒</strong>，本人願無條件接受退租處分！
+        </div>
+        <button class="pixel-btn" onclick="startGame()">✍️ 簽署並入住</button>
+    </div>
+
+    <div id="play-screen" class="screen">
+        <div id="ui-bar">
+            <span>分數: <span id="score">0</span></span>
+            <span id="status-icon">🏠 室內</span>
+        </div>
+        <div id="warning-timer">10</div>
+        
+        <div id="game-area">
+            <div id="scene-background" class="home-bg">
+                <div class="home-decor">
+                    <div class="window"></div>
+                    <div class="pet-bed"></div>
+                    <div class="food-bowl"></div>
+                </div>
+            </div>
+            
+            <div id="pet-character">🐈</div>
+            
+            <div id="task-container"></div>
+        </div>
+    </div>
+
+    <div id="game-over-screen" class="screen">
+        <h1 class="text-danger">被趕出去了！</h1>
+        <p>最終分數：<span id="final-score">0</span></p>
+        <p>你因為以下原因被房東/管委會投訴：</p>
+        <ul id="failure-reasons"></ul>
+        <h2>你準備好當一個寵物飼主了嗎？</h2>
+        <button class="pixel-btn" onclick="resetToStart()">🔄 重新簽約</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
