@@ -4,163 +4,121 @@
     --border-color: #222;
     --btn-color: #fbc02d;
     --danger-color: #e74c3c;
-    /* 場景顏色 */
-    --wall-color: #f4a261;
-    --floor-color: #e9c46a;
-    --sky-color: #87ceeb;
-    --road-color: #95a5a6;
 }
 
 body {
-    font-family: 'DotGothic16', 'Courier New', Courier, monospace;
+    font-family: 'DotGothic16', sans-serif;
     background-color: var(--bg-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    user-select: none;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; margin: 0; user-select: none;
 }
 
 #game-container {
-    width: 100%;
-    max-width: 400px;
-    height: 90vh;
-    max-height: 700px;
-    background-color: #fff;
-    position: relative;
-    overflow: hidden;
+    width: 100%; max-width: 400px; height: 90vh; max-height: 700px;
+    background-color: #fff; position: relative; overflow: hidden;
     border: 4px solid var(--border-color);
     box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.8);
 }
 
-/* UI 介面設定 */
 .screen {
-    position: absolute; width: 100%; height: 100%;
-    display: none; flex-direction: column;
-    justify-content: center; align-items: center; text-align: center;
-    padding: 20px; box-sizing: border-box; background: #fff; z-index: 20;
+    position: absolute; width: 100%; height: 100%; display: none; 
+    flex-direction: column; justify-content: center; align-items: center; 
+    text-align: center; padding: 20px; box-sizing: border-box; background: #fff; z-index: 20;
 }
 .screen.active { display: flex; }
 .screen.transparent-bg { background: transparent; }
 
 h1, h2 { color: var(--text-color); margin-bottom: 20px; }
 .text-danger { color: var(--danger-color); font-weight: bold; }
-#selected-pet-icon { font-size: 5rem; margin: 10px 0; }
+.pixel-icon { width: 60px; height: 60px; shape-rendering: crispEdges; }
 
 .contract-box {
-    text-align: justify; background: #fff; padding: 15px;
-    border: 2px solid #222; margin-bottom: 20px; font-size: 1.1rem;
-    box-shadow: 4px 4px 0 0 #ccc;
+    text-align: justify; background: #fff; padding: 15px; border: 2px solid #222; 
+    margin-bottom: 20px; font-size: 1.1rem; box-shadow: 4px 4px 0 0 #ccc;
 }
 
 .pixel-btn {
     background-color: var(--btn-color); border: 2px solid var(--border-color);
-    padding: 10px 20px; font-size: 1.2rem; font-family: inherit;
-    font-weight: bold; cursor: pointer; box-shadow: 4px 4px 0px 0px var(--border-color);
+    padding: 10px 20px; font-size: 1.2rem; font-family: inherit; font-weight: bold; 
+    cursor: pointer; box-shadow: 4px 4px 0px 0px var(--border-color);
 }
 .pixel-btn:active { transform: translate(4px, 4px); box-shadow: none; }
 
 .pet-choice { display: flex; gap: 20px; }
 .pet-card {
-    border: 2px solid var(--border-color); padding: 15px; font-size: 4rem;
-    cursor: pointer; box-shadow: 4px 4px 0px 0px var(--border-color); transition: 0.2s;
+    border: 2px solid var(--border-color); padding: 15px; cursor: pointer; 
+    box-shadow: 4px 4px 0px 0px var(--border-color); transition: 0.2s;
 }
 .pet-card:hover { background: #ffe082; transform: translateY(-5px); }
-.pet-card span { font-size: 1.2rem; font-weight: bold; }
 
-/* 遊戲進行中 UI */
 #ui-bar {
-    position: absolute; top: 0; left: 0; width: 100%; padding: 10px;
-    background: #fff; border-bottom: 4px solid var(--border-color);
-    display: flex; justify-content: space-between; box-sizing: border-box;
-    font-weight: bold; font-size: 1.2rem; z-index: 10;
+    position: absolute; top: 0; left: 0; width: 100%; padding: 10px; background: #fff; 
+    border-bottom: 4px solid var(--border-color); display: flex; justify-content: space-between; 
+    box-sizing: border-box; font-weight: bold; font-size: 1.2rem; z-index: 10;
 }
 
 #game-area {
-    position: absolute; top: 48px; left: 0; width: 100%; height: calc(100% - 48px);
-    overflow: hidden;
+    position: absolute; top: 48px; left: 0; width: 100%; height: calc(100% - 48px); overflow: hidden;
 }
 
-/* ================= 遊戲場景：家裡 ================= */
+/* ================= 遊戲場景：家裡 (純CSS像素繪製) ================= */
 .home-bg {
-    position: absolute; width: 100%; height: 100%;
-    background-color: var(--wall-color);
-    /* 像素風條紋壁紙與木地板 */
-    background-image: 
-        linear-gradient(0deg, var(--floor-color) 35%, transparent 35%),
-        linear-gradient(90deg, rgba(255,255,255,0.2) 20px, transparent 20px);
-    background-size: 100% 100%, 40px 100%;
-}
-/* 客廳寵物用品 (純CSS畫的像素風) */
-.home-decor { display: block; width: 100%; height: 100%; position: absolute; }
-.window {
-    position: absolute; top: 15%; left: 15%; width: 30%; height: 25%;
-    background: #a2d2ff; border: 4px solid #222; box-shadow: inset -4px -4px 0px rgba(255,255,255,0.5);
-}
-.pet-bed {
-    position: absolute; bottom: 35%; right: 10%; width: 80px; height: 30px;
-    background: #e07a5f; border-radius: 50px 50px 0 0; border: 4px solid #222;
-}
-.food-bowl {
-    position: absolute; bottom: 35%; right: 40%; width: 30px; height: 15px;
-    background: #a8dadc; border-radius: 0 0 15px 15px; border: 3px solid #222;
+    position: absolute; width: 100%; height: 100%; background-color: #f4a261;
+    background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(0,0,0,0.1) 38px, rgba(0,0,0,0.1) 40px),
+        linear-gradient(0deg, #e9c46a 0%, #e9c46a 30%, transparent 30%),
+        linear-gradient(0deg, #d4a373 30%, #d4a373 35%, transparent 35%),
+        repeating-linear-gradient(90deg, #f4a261 0, #f4a261 20px, #e76f51 20px, #e76f51 40px);
+    background-size: 100% 30%, 100% 100%, 100% 100%, 100% 100%;
+    background-position: 0 100%, 0 0, 0 0, 0 0;
+    background-repeat: no-repeat;
 }
 
-/* ================= 遊戲場景：遛狗街道 ================= */
+/* ================= 遊戲場景：遛狗街道 (純CSS無縫捲動動畫) ================= */
 .walk-bg {
-    position: absolute; width: 100%; height: 100%;
-    background-color: var(--sky-color);
-    /* 像素風天空與斑馬線道路 */
-    background-image: linear-gradient(0deg, var(--road-color) 40%, transparent 40%);
-    background-size: 100% 100%;
-}
-.walk-bg::after {
-    /* 捲動的柵欄與人行道邊界 */
-    content: ''; position: absolute; bottom: 30%; left: 0; width: 200%; height: 30%;
-    background: 
-        repeating-linear-gradient(90deg, #d35400, #d35400 20px, transparent 20px, transparent 40px),
-        linear-gradient(0deg, #fff 10px, transparent 10px);
-    background-size: 100% 50px, 100% 100%;
-    background-repeat: repeat-x;
-    background-position: bottom;
-    animation: scrollBg 2s linear infinite;
+    position: absolute; width: 100%; height: 100%; background-color: #87ceeb;
+    background-image:
+        radial-gradient(circle at 40px 30px, #fff 20px, transparent 20px),
+        radial-gradient(circle at 80px 40px, #fff 15px, transparent 15px),
+        linear-gradient(90deg, #2A9D8F 0%, #2A9D8F 50%, transparent 50%),
+        linear-gradient(0deg, #7f8c8d 0%, #7f8c8d 15%, #bdc3c7 15%, #bdc3c7 20%, #95a5a6 20%, #95a5a6 30%, #588157 30%, #588157 35%, transparent 35%);
+    background-size: 250px 100px, 250px 100px, 40px 15px, 100% 100%;
+    background-position: 0 0, 0 0, 0 calc(100% - 35%), 0 0;
+    background-repeat: repeat-x, repeat-x, repeat-x, no-repeat;
+    animation: walkScroll 2.5s linear infinite;
 }
 
-@keyframes scrollBg {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50px); }
+@keyframes walkScroll {
+    from { background-position: 0 0, 0 0, 0 calc(100% - 35%), 0 0; }
+    to { background-position: -250px 0, -250px 0, -40px calc(100% - 35%), 0 0; }
 }
 
-/* ================= 寵物動畫 ================= */
+/* ================= 寵物容器與動畫 ================= */
 #pet-character {
-    position: absolute; bottom: 15%; left: 10%;
-    font-size: 5rem; z-index: 5;
-    /* 避免字體邊緣模糊 */
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.2); 
+    position: absolute; bottom: 15%; left: 10%; width: 80px; height: 80px; z-index: 5;
 }
 
-/* 貓狗在家的來回巡視動畫 */
+/* 貓狗在家巡視 (修正了倒退走的問題) */
 .anim-wander {
-    animation: wanderAround 10s linear infinite;
+    animation: wanderAround 8s infinite linear;
 }
 
 @keyframes wanderAround {
-    0% { left: 10%; transform: scaleX(1); }
-    45% { left: 60%; transform: scaleX(1); }
-    50% { left: 60%; transform: scaleX(-1); }
-    95% { left: 10%; transform: scaleX(-1); }
-    100% { left: 10%; transform: scaleX(1); }
+    0%   { left: 10%; transform: scaleX(1); }  /* 向右走 */
+    45%  { left: 60%; transform: scaleX(1); }  /* 到達右邊 */
+    46%  { left: 60%; transform: scaleX(-1); } /* 瞬間轉身面向左 */
+    95%  { left: 10%; transform: scaleX(-1); } /* 向左走回原點 */
+    96%  { left: 10%; transform: scaleX(1); }  /* 瞬間轉身面向右 */
+    100% { left: 10%; transform: scaleX(1); }  
 }
 
-/* 狗在街上的行走 (原地彈跳) 動畫 */
+/* 狗在街上走路 (原地彈跳，背景向後退) */
 .anim-walk {
-    left: 30%;
-    transform: scaleX(1);
-    animation: bounceWalk 0.5s step-end infinite;
+    left: 30%; transform: scaleX(1);
+    animation: dogWalkBounce 0.4s steps(2, end) infinite;
 }
 
-@keyframes bounceWalk {
+@keyframes dogWalkBounce {
     0%, 100% { bottom: 15%; }
     50% { bottom: 17%; }
 }
@@ -169,19 +127,17 @@ h1, h2 { color: var(--text-color); margin-bottom: 20px; }
 #task-container { position: absolute; width: 100%; height: 100%; z-index: 15; pointer-events: none; }
 .task-item {
     position: absolute; background: #fff; border: 3px solid var(--border-color);
-    padding: 8px 10px; border-radius: 8px; box-shadow: 4px 4px 0px 0px var(--border-color);
+    padding: 5px 10px; border-radius: 8px; box-shadow: 4px 4px 0px 0px var(--border-color);
     cursor: pointer; display: flex; flex-direction: column; align-items: center;
     font-size: 0.9rem; font-weight: bold; pointer-events: auto;
     animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.task-item .icon { font-size: 2rem; margin-bottom: 5px; }
 
 @keyframes popIn {
     from { transform: scale(0); }
     to { transform: scale(1); }
 }
 
-/* 警告紅光 */
 .warning-mode { animation: flashRed 1s infinite; }
 @keyframes flashRed {
     0% { box-shadow: inset 0 0 50px red; }
@@ -191,9 +147,8 @@ h1, h2 { color: var(--text-color); margin-bottom: 20px; }
 
 #warning-timer {
     position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 7rem; color: rgba(255, 0, 0, 0.5); font-weight: bold;
-    z-index: 100; display: none; pointer-events: none;
-    text-shadow: 4px 4px 0px #fff;
+    font-size: 7rem; color: rgba(255, 0, 0, 0.6); font-weight: bold; z-index: 100; 
+    display: none; pointer-events: none; text-shadow: 4px 4px 0px #fff;
 }
 
 #failure-reasons {
