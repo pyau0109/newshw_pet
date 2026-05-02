@@ -178,7 +178,7 @@ function checkGameStatus() {
     if (tasksOnScreen.length >= 3) {
         if (!warningActive) {
             warningActive = true;
-            warningSeconds = 10;
+            warningSeconds = 5;
             gameArea.classList.add('warning-mode');
             warningDisplay.innerText = warningSeconds;
             warningDisplay.style.display = 'block';
